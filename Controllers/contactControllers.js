@@ -1,4 +1,4 @@
-import { ContactModel } from "../IMS/models/contact.js";
+import { Contact } from "../IMS/models/contact.js";
 import mongoose from "mongoose";
 
 export const createContact = async (req, res) => {
@@ -13,3 +13,21 @@ export const createContact = async (req, res) => {
     console.log(error);
   }
 };
+
+// export const updateContact = async (req, res) => {
+
+//   try {
+//     const { id } = req.params;
+//     const { name, email, phone } = req.body;
+
+//     const updatedContact = await ContactModel.findByIdAndUpdate(
+//       id,
+//       { name, email, phone },
+//       { new: true, runValidators: true }
+//     );
+//     if (!updatedContact) {
+//       return res.status(404)
+//     }
+
+//   }
+// }

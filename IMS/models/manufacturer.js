@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
-const ManufactureSchema = new mongoose.Schema({
+
+const manufacturerSchema = new mongoose.Schema({
   name: { type: String, required: true },
   country: { type: String },
   website: { type: String, unique: true },
   description: { type: String },
   adress: String,
-  contact: ContactSchema,
+  contact: { type: mongoose.Schema.Types.ObjectId, ref: "Contact" },
 });
 
-export const Manufacturer = mongoose.model("Manufacturer", ManufactureSchema);
+export const Manufacturer = mongoose.model("Manufacturer", manufacturerSchema);
