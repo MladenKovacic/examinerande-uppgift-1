@@ -6,8 +6,8 @@ const productSchema = new mongoose.Schema({
   description: { type: String },
   price: { type: Number, required: true },
   category: String,
-  manufacturer: { type: mongoose.Schema.Types.ObjectId, ref: "Manufacturer" },
+  manufacturer: { type: mongoose.Schema.Types.ObjectId, ref: "manufacturers" },
   amountInStock: { type: Number, default: 0 },
 });
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.model("products", productSchema);

@@ -60,7 +60,7 @@ async function seedDatabase() {
       description: faker.commerce.productDescription(),
       price: faker.commerce.price({ min: 10, max: 1000, dec: 2 }),
       category: faker.helpers.arrayElement(categories),
-      manufacturerModel: faker.helpers.arrayElement(manufacturerModels)._id,
+      manufacturer: faker.helpers.arrayElement(manufacturerModels)._id,
       amountInStock: faker.number.int({ min: 0, max: 100 }),
     }));
 

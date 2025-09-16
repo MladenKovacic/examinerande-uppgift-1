@@ -6,7 +6,7 @@ const manufacturerSchema = new mongoose.Schema({
   website: { type: String, unique: true },
   description: { type: String },
   adress: String,
-  contact: { type: mongoose.Schema.Types.ObjectId, ref: "Contact" },
+  contact: { type: mongoose.Schema.Types.ObjectId, ref: "Contacts" },
 });
 
-export const Manufacturer = mongoose.model("Manufacturer", manufacturerSchema);
+export const Manufacturer = mongoose.model("manufacturers", manufacturerSchema);

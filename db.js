@@ -5,7 +5,7 @@ dotenv.config();
 export async function connectDB() {
   if (!process.env.MONGODB_URI) throw new Error("Missing MONGODB_URI");
   await mongoose.connect(process.env.MONGODB_URI, {
-    dbName: "ProductDataBase", //om du inte sätter denna i din connection string
+    dbName: "IMS", //om du inte sätter denna i din connection string
   });
   console.log("MongoDB connected");
 }
