@@ -222,7 +222,7 @@ export const criticalStock = async (req, res) => {
   }
 };
 
-/* export const criticalPopulate = async (req, res) => {
+export const criticalPopulate = async (req, res) => {
   try {
     const list = await Product.find({ amountInStock: { $lt: 5 } })
       .populate({
@@ -230,21 +230,11 @@ export const criticalStock = async (req, res) => {
         select: "name",
         populate: { path: "contact", select: "name phone email" },
       })
-      .select("_id.manufacturer");
-
-    const formattedList = list.map((item) => ({
-      _id: item.id,
-      productName: item.name,
-      manufacturer: item.manufacturer.name,
-      contact: {
-        name: item.manufacturer.contact.name,
-        phone: item.manufacturer.contact.phone,
-        email: item.manufacturer.contact.email,
-      },
-    }));
-    res.status(200).json(formattedList);
+      .select("name manufacturer contact");
+      console.log(list)
+    res.status(200).json(list);
   } catch (error) {
     console.log(error);
   }
 };
- */
+
