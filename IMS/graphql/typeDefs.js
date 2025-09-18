@@ -21,4 +21,8 @@ export const typeDefs = /* GraphQL */ `
     email: String!
     phone: String!
   }
+
+  type Query {
+    getProduct: [Product]!
+  }
 `;
