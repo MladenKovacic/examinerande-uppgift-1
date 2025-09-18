@@ -10,8 +10,7 @@
     "mongoose": "^8.18.0"
   },
   "scripts": {
-    "dev:rest": "nodemon server-rest.js",
-    "dev:gql": "nodemon server-graphql-express.js"
+    "dev": "nodemon index.js"
   },
   "type": "module",
   "devDependencies": {
