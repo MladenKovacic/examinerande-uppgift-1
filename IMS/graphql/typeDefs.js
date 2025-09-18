@@ -23,6 +23,12 @@ export const typeDefs = /* GraphQL */ `
   }
 
   type Query {
-    getProduct: [Product]!
+    Products: [Product]!
+    Manufacturers: [Manufacturer]!
+    Contacts: [Contact]!
+
+    Product(id: ID!): Product
+
+    TotalStockValue: [Product]
   }
 `;
