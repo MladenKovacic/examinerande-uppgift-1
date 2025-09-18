@@ -22,6 +22,11 @@ export const typeDefs = /* GraphQL */ `
     phone: String!
   }
 
+  type TSV {
+    _id: ID
+    totalStockValue: Float
+  }
+
   type Query {
     Products: [Product]!
     Manufacturers: [Manufacturer]!
@@ -29,6 +34,6 @@ export const typeDefs = /* GraphQL */ `
 
     Product(id: ID!): Product
 
-    TotalStockValue: [Product]
+    totalStockValue: TSV!
   }
 `;

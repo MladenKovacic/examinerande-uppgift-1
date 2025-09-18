@@ -43,20 +43,27 @@ export const resolvers = {
       return TotalStockValue;
     }, */
 
-    TotalStockValue: async () => {
-      return await Product.aggregate([
-        {
-          $project: {
-            total: { $multiply: ["$price", "$amountInStock"] },
-          },
-        },
+    totalStockValue: async () => {
+      const [totalStockValue] = await Product.aggregate([
+        { $match: {} },
         {
           $group: {
             _id: null,
-            grandTotal: { $sum: "$total" },
+            totalStockValue: {
+              $sum: { $multiply: ["$price", "$amountInStock"] },
+            },
           },
         },
       ]);
+      return totalStockValue;
+      // {
+      //   $project: {
+      //     item: 1,
+      //     price: 1,
+      //     amountInStock: 1,
+      //     total: { $multiply: ["$price", "$amountInStock"] }, // ✅ multiply only
+      //   },
+      // },
     },
   },
 };
