@@ -13,15 +13,15 @@ const app = express();
 
 app.use(express.json());
 app.use("/", route);
-// const apollo = new ApolloServer({ typeDefs, resolvers });
-// await apollo.start();
+const apollo = new ApolloServer({ typeDefs, resolvers });
+await apollo.start();
 
-// app.use(
-//   "/graphql",
-//   expressMiddleware(apollo, {
-//     context: async () => ({}),
-//   })
-// );
+app.use(
+  "/graphql",
+  expressMiddleware(apollo, {
+    context: async () => ({}),
+  })
+);
 
 const PORT = 3000;
 

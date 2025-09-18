@@ -1,5 +1,5 @@
 import express from "express";
-import { getManufacturers } from "../Controllers/manufacturerControllers";
+import { getManufacturers } from "../Controllers/manufacturerControllers.js";
 const router = express.Router();
 
 router.get("/", getManufacturers);
