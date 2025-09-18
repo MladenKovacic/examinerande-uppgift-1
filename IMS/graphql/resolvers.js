@@ -55,7 +55,8 @@ export const resolvers = {
           },
         },
       ]);
-      return totalStockValue;
+
+      return totalStockValue.totalStockValue;
       // {
       //   $project: {
       //     item: 1,
