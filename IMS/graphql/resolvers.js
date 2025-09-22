@@ -80,6 +80,11 @@ export const resolvers = {
     lowStockProducts: async () => {
       const lowStockProducts = await Product.find({
         amountInStock: { $lt: 10 },
+      }).populate({
+        path: "manufacturer",
+        populate: {
+          path: "contact",
+        },
       });
       return lowStockProducts;
     },

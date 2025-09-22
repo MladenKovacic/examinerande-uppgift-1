@@ -5,7 +5,7 @@ const manufacturerSchema = new mongoose.Schema({
   country: { type: String },
   website: { type: String, unique: true },
   description: { type: String },
-  adress: String,
+  address: { type: String },
   contact: { type: mongoose.Schema.Types.ObjectId, ref: "contacts" },
 });
 
