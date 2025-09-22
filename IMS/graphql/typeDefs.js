@@ -1,7 +1,7 @@
 export const typeDefs = /* GraphQL */ `
   type Product {
     name: String!
-    sku: Int!
+    sku: String!
     description: String
     price: Float!
     category: String!

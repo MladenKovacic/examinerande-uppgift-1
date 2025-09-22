@@ -10,11 +10,18 @@ import {
 export const resolvers = {
   Query: {
     Products: async (_parent, args) => {
-      const product = await Product.find();
+      const product = await Product.find().populate({
+        path: "manufacturer",
+        populate: {
+          path: "contact",
+        },
+      });
       return product;
     },
     Manufacturers: async (_parent, args) => {
-      const manufacturer = await Manufacturer.find();
+      const manufacturer = await Manufacturer.find().populate({
+        path: "contact",
+      });
       return manufacturer;
     },
     Contacts: async (_parent, args) => {

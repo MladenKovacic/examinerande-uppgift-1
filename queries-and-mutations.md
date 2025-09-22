@@ -37,43 +37,99 @@ mutation {
 ### products
 
 ```graphql
-// add your query/mutation here
+// query Query {
+  Products {
+    name
+    manufacturer {
+      name
+      contact {
+        name
+      }
+    }
+  }
+}
 ```
 
 ### product(id: ID!)
 
 ```graphql
-// add your query/mutation here
+// query Query($productId: ID!) {
+  Product(id: $productId) {
+    name
+  }
+}/
+Variables:
+{
+  "productId": "68c9431dfac9702e194f2d58"
+}
 ```
 
 ### totalStockValue
 
 ```graphql
-// add your query/mutation here
+// query Query {
+  totalStockValue
+}
+/mutation here
 ```
 
 ### totalStockValueByManufacturer
 
 ```graphql
-// add your query/mutation here
+// query Query {
+  totalStockValuebyManufacturer {
+    totalValue
+    name
+  }
+}
+/mutation here
 ```
 
 ### lowStockProducts
 
 ```graphql
-// add your query/mutation here
+// query Query {
+  lowStockProducts {
+    price
+    name
+    amountInStock
+  }
+}
+/mutation here
 ```
 
 ### criticalStockProducts
 
 ```graphql
-// add your query/mutation here
+// query Query {
+  criticalProducts {
+    amountInStock
+    name
+    price
+  }
+}
+/mutation here
 ```
 
 ### manufacturers
 
 ```graphql
-// add your query/mutation here
+query Query {
+  Manufacturers {
+    _id
+    name
+    country
+    website
+    description
+    address
+    contact {
+      _id
+      name
+      email
+      phone
+    }
+  }
+}
 ```
 
 ## Mutations
@@ -81,17 +137,67 @@ mutation {
 ### addProduct
 
 ```graphql
-// add your query/mutation here
+mutation Mutation($input: addProductInput) {
+  addProduct(input: $input) {
+    _id
+    name
+    sku
+    description
+    price
+    category
+    manufacturer {
+      _id
+      name
+      country
+      website
+      description
+      address
+      contact {
+        _id
+        name
+        email
+        phone
+      }
+    }
+    amountInStock
+  }
+}
 ```
 
 ### updateProduct
 
 ```graphql
-// add your query/mutation here
+mutation Mutation($updateProductId: ID!, $input: updateProductInput) {
+  updateProduct(id: $updateProductId, input: $input) {
+    _id
+    amountInStock
+    category
+    description
+    manufacturer {
+      website
+      name
+      description
+      country
+      contact {
+        _id
+        email
+        name
+        phone
+      }
+      address
+      _id
+    }
+    name
+    price
+    sku
+  }
+}
 ```
 
 ### deleteProduct
 
 ```graphql
-// add your query/mutation here
+mutation Mutation($deleteProductId: ID!) {
+  deleteProduct(id: $deleteProductId)
+}
 ```
