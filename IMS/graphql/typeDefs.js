@@ -5,7 +5,7 @@ export const typeDefs = /* GraphQL */ `
     description: String
     price: Float!
     category: String!
-    manufacturer: [Manufacturer]!
+    manufacturer: Manufacturer!
     amountInStock: Int!
   }
   type Manufacturer {
@@ -14,12 +14,16 @@ export const typeDefs = /* GraphQL */ `
     website: String
     description: String
     address: String!
-    contact: [Contact]!
+    contact: Contact!
   }
   type Contact {
     name: String!
     email: String!
     phone: String!
+  }
+  type manufacturervalue {
+    name: String!
+    totalValue: Float!
   }
 
   # type TSV {
@@ -31,9 +35,36 @@ export const typeDefs = /* GraphQL */ `
     Products: [Product]!
     Manufacturers: [Manufacturer]!
     Contacts: [Contact]!
-
+    totalStockValuebyManufacturer: [manufacturervalue]!
     Product(id: ID!): Product
-
     totalStockValue: Float!
+    lowStockProducts: [Product]!
+    criticalProducts: [Product]!
+  }
+
+  input addProductInput {
+    name: String!
+    sku: String!
+    description: String!
+    price: Float!
+    category: String!
+    manufacturer: String!
+    amountInStock: Int!
+  }
+
+  input updateProductInput {
+    name: String
+    sku: String
+    description: String
+    price: Float
+    category: String
+    manufacturer: String
+    amountInStock: Int
+  }
+
+  type Mutation {
+    addProduct(input: addProductInput): Product!
+    updateProduct(id: ID!, input: updateProductInput): Product!
+    deleteProduct(id: ID!): Product!
   }
 `;

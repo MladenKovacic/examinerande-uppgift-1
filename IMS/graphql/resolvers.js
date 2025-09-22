@@ -2,6 +2,10 @@ import { Product } from "../models/product.js";
 import { Contact } from "../models/contact.js";
 import { Manufacturer } from "../models/manufacturer.js";
 import mongoose from "mongoose";
+import {
+  deleteProduct,
+  updateProduct,
+} from "../../Controllers/productControllers.js";
 
 export const resolvers = {
   Query: {
@@ -20,28 +24,6 @@ export const resolvers = {
     Product: async (_p, { id }) => {
       return Product.findById(id);
     },
-    /*  TotalStockValue: async (_p, args) => {
-      const pipeline = [
-        {
-          $group: {
-            _id: "$Products",
-            totalValue: {
-              $sum: { $multiply: ["$price", "$amountInStock"] },
-            },
-          },
-        },
-        {
-          $project: {
-            id: 0,
-            totalValue: 1,
-          },
-        },
-      ];
-
-      const TotalStockValue = await Product.aggregate(pipeline);
-
-      return TotalStockValue;
-    }, */
 
     totalStockValue: async () => {
       const [totalStockValue] = await Product.aggregate([
@@ -57,14 +39,86 @@ export const resolvers = {
       ]);
 
       return totalStockValue.totalStockValue;
-      // {
-      //   $project: {
-      //     item: 1,
-      //     price: 1,
-      //     amountInStock: 1,
-      //     total: { $multiply: ["$price", "$amountInStock"] }, // ✅ multiply only
-      //   },
-      // },
+    },
+    totalStockValuebyManufacturer: async () => {
+      const totalValue = await Product.aggregate([
+        {
+          $lookup: {
+            from: "manufacturers",
+            localField: "manufacturer",
+            foreignField: "_id",
+            as: "manufacturer",
+          },
+        },
+        {
+          $unwind: "$manufacturer",
+        },
+        {
+          $group: {
+            _id: "$manufacturer",
+            //manufacturer: "$manufacturer.name",
+            totalValue: { $sum: { $multiply: ["$price", "$amountInStock"] } },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            name: "$_id.name",
+            totalValue: "$totalValue",
+          },
+        },
+      ]);
+      return totalValue;
+    },
+    lowStockProducts: async () => {
+      const lowStockProducts = await Product.find({
+        amountInStock: { $lt: 10 },
+      });
+      return lowStockProducts;
+    },
+    criticalProducts: async () => {
+      return await Product.aggregate([
+        {
+          $match: { amountInStock: { $lt: 5 } },
+        },
+        {
+          $lookup: {
+            from: "manufacturers",
+            localField: "manufacturer",
+            foreignField: "_id",
+            as: "manufacturer",
+          },
+        },
+        {
+          $unwind: "$manufacturer",
+        },
+        {
+          $lookup: {
+            from: "contacts",
+            localField: "manufacturer.contact",
+            foreignField: "_id",
+            as: "manufacturer.contact",
+          },
+        },
+        {
+          $unwind: "$manufacturer.contact",
+        },
+      ]);
+      // return criticalProducts;
+    },
+  },
+  Mutation: {
+    addProduct: async (_parent, { input }) => {
+      return await Product.create(input);
+    },
+    updateProduct: async (_parent, { id, input }) => {
+      return await Product.findByIdAndUpdate(id, input, {
+        new: true,
+        runValidators: true,
+      });
+    },
+    deleteProduct: async (_parent, { id }) => {
+      return await Product.findByIdAndDelete(id);
     },
   },
 };
