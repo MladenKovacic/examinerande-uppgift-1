@@ -37,13 +37,21 @@ mutation {
 ### products
 
 ```graphql
-// query Query {
+query {
   Products {
     name
+    sku
+    description
+    price
+    category
+    amountInStock
     manufacturer {
       name
+      country
       contact {
         name
+        email
+        phone
       }
     }
   }
@@ -53,81 +61,92 @@ mutation {
 ### product(id: ID!)
 
 ```graphql
-// query Query($productId: ID!) {
-  Product(id: $productId) {
+query {
+  Product(id: "PRODUCT_ID_HERE") {
     name
+    price
+    amountInStock
+    manufacturer {
+      name
+    }
   }
-}/
-Variables:
-{
-  "productId": "68c9431dfac9702e194f2d58"
 }
 ```
 
 ### totalStockValue
 
 ```graphql
-// query Query {
+query {
   totalStockValue
 }
-/mutation here
 ```
 
 ### totalStockValueByManufacturer
 
 ```graphql
-// query Query {
+query {
   totalStockValuebyManufacturer {
-    totalValue
     name
+    totalValue
   }
 }
-/mutation here
 ```
 
 ### lowStockProducts
 
 ```graphql
-// query Query {
+query {
   lowStockProducts {
-    price
     name
     amountInStock
+    manufacturer {
+      name
+    }
   }
 }
-/mutation here
 ```
 
 ### criticalStockProducts
 
 ```graphql
-// query Query {
+query {
   criticalProducts {
-    amountInStock
     name
-    price
+    amountInStock
+    manufacturer {
+      name
+      contact {
+        name
+        email
+      }
+    }
   }
 }
-/mutation here
 ```
 
 ### manufacturers
 
 ```graphql
-query Query {
+query {
   Manufacturers {
-    _id
     name
     country
     website
-    description
-    address
     contact {
-      _id
       name
       email
-      phone
     }
+  }
+}
+```
+
+### contacts
+```graphql
+query {
+  Contacts {
+    name
+    email
+    phone
   }
 }
 ```
@@ -137,28 +156,21 @@ query Query {
 ### addProduct
 
 ```graphql
-mutation Mutation($input: addProductInput) {
-  addProduct(input: $input) {
-    _id
+mutation {
+  addProduct(
+    input: {
+      name: "Wireless Mouse"
+      sku: "WM123"
+      description: "Ergonomic wireless mouse"
+      price: 29.99
+      category: "Electronics"
+      manufacturer: "MANUFACTURER_ID_HERE"
+      amountInStock: 150
+    }
+  ) {
     name
     sku
-    description
     price
-    category
-    manufacturer {
-      _id
-      name
-      country
-      website
-      description
-      address
-      contact {
-        _id
-        name
-        email
-        phone
-      }
-    }
     amountInStock
   }
 }
@@ -167,29 +179,17 @@ mutation Mutation($input: addProductInput) {
 ### updateProduct
 
 ```graphql
-mutation Mutation($updateProductId: ID!, $input: updateProductInput) {
-  updateProduct(id: $updateProductId, input: $input) {
-    _id
-    amountInStock
-    category
-    description
-    manufacturer {
-      website
-      name
-      description
-      country
-      contact {
-        _id
-        email
-        name
-        phone
-      }
-      address
-      _id
+mutation {
+  updateProduct(
+    id: "PRODUCT_ID_HERE"
+    input: {
+      price: 24.99
+      amountInStock: 200
     }
+  ) {
     name
     price
-    sku
+    amountInStock
   }
 }
 ```
@@ -197,7 +197,10 @@ mutation Mutation($updateProductId: ID!, $input: updateProductInput) {
 ### deleteProduct
 
 ```graphql
-mutation Mutation($deleteProductId: ID!) {
-  deleteProduct(id: $deleteProductId)
+mutation {
+  deleteProduct(id: "PRODUCT_ID_HERE") {
+    name
+    sku
+  }
 }
 ```
